@@ -1,18 +1,24 @@
-function hasPairWithSum(arr, k) {
-  const seen = new Set()
-  // Pour chaque élément
+// Je fais tout en un seul passage (O(n) minimal)
+const rl = require("readline").createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function hasPairWithSumOnePass(arr, k) {
+  const seen = new Set();
   for (let i = 0; i < arr.length; i++) {
-    const complement = k - arr[i]
-    // Si j'ai vu le complément, je renvoie true
-    if (seen.has(complement)) {
-      return true
-    }
-    // Sinon je stocke l'élément
-    seen.add(arr[i])
+    const complement = k - arr[i];
+    if (seen.has(complement)) return true;
+    seen.add(arr[i]);
   }
-  return false
+  return false;
 }
 
-// Je teste
-console.log(hasPairWithSum([10, 15, 3, 7], 17)) // true
-console.log(hasPairWithSum([1, 8, 10, 21], 19)) // false
+rl.question("Tableau (ex: 10 15 3 7) : ", line => {
+  const arr = line.trim().split(/\s+/).map(Number);
+  rl.question("Valeur de k : ", kline => {
+    const k = Number(kline);
+    console.log("\nRésultat :", hasPairWithSumOnePass(arr, k));
+    rl.close();
+  });
+});

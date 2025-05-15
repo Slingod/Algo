@@ -1,21 +1,23 @@
-function countBuildingsWithView(heights) {
-  let count = 0
-  // Pour chaque immeuble i
+// Je compare chaque immeuble aux suivants (O(n²))
+const rl = require("readline").createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+function countBuildingsWithViewQuadratic(heights) {
+  let count = 0;
   for (let i = 0; i < heights.length; i++) {
-    let hasView = true
-    // Je regarde tous les immeubles à sa droite (ouest)
+    let hasView = true;
     for (let j = i + 1; j < heights.length; j++) {
-      // S'il y en a un plus grand ou égal, pas de vue
-      if (heights[j] >= heights[i]) {
-        hasView = false
-        break
-      }
+      if (heights[j] >= heights[i]) { hasView = false; break; }
     }
-    if (hasView) count++
+    if (hasView) count++;
   }
-  return count
+  return count;
 }
 
-// Je teste avec des exemples
-console.log(countBuildingsWithView([3, 7, 8, 3, 6, 1])) // 3
-console.log(countBuildingsWithView([1, 4, 5, 8]))       // 1
+rl.question("Hauteurs (ex: 3 7 8 3 6 1) : ", line => {
+  const heights = line.trim().split(/\s+/).map(Number);
+  console.log("\nRésultat :", countBuildingsWithViewQuadratic(heights));
+  rl.close();
+});
